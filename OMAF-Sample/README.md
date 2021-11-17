@@ -8,7 +8,7 @@
 ## Software Requirements
 
  - Server OS : CentOS Linux release 7.6.1810 (Core)
- - Client OS : Ubuntu 18.04 LTS
+ - Client OS : Ubuntu 18.04 LTS(recommented)
  - Docker version : 19.03.12
 
 ## Test Environment Hardware
@@ -21,9 +21,22 @@
 
 ## Docker image deployment steps
 
+### Preparatory
+1. update os
+
+sudo apt upate
+
+sudo apt upgrade
+
+2.insatll tools
+
+sudo apt-get install libgoogle-glog-dev cmake clang curl -y
+
+
 ### Installation
 
 - [Install docker engine in server](https://docs.docker.com/install)
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 
 - Server :
 ```bash

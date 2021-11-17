@@ -24,7 +24,7 @@
 ### Preparatory
 1. update os
 
-sudo apt upate
+sudo apt update
 
 sudo apt upgrade
 

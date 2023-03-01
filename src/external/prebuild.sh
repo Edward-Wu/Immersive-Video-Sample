@@ -113,7 +113,7 @@ install_dependencies() {
     if [ ${LTTNGFLAG} == "--enable-lttng" ] ; then
         ./install_lttng.sh
     fi
-}
+} 
 
 install_tools
 install_dependencies ${TARGET}

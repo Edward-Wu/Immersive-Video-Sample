@@ -4,6 +4,32 @@ TARGET=$1
 LTTNGFLAG=$2
 EX_PATH=${PWD}
 
+
+skip="n"
+#function exec_prompt,
+#$1: exec infomation
+exec_prompt()
+{
+  echo ""
+  echo "---------------------"
+  echo "$1, continue, yes(y), no(n) or skip(s)?"
+  skip="n"
+
+  read x
+  if [ "${x}" = "y" ]; then
+    echo "------- $1 -------"
+  else
+    if [ "${x}" = "s" ]; then
+      skip="y"
+    else
+      # exit shell
+      echo "input: ${x}, abort, bye-bye!"
+      exit
+    fi
+  fi
+}
+
+
 if [ $# != 1 ] ; then
     echo "Please choose server, client or android you want to build."
     echo "Add \"--enable-lttng\" as the second parameter to enable lttng."
@@ -33,13 +59,13 @@ install_tools() {
     if [ $? != 0 ];then
         if [ "${OS}" == \""Ubuntu"\" ];then
             sudo apt-get install -y software-properties-common
-	    sudo apt update
-	    sudo apt install make -y
-	    sudo apt install g++-7 -y
-	    sudo update-alternatives \
-		    --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
-		    --slave /usr/bin/g++ g++ /usr/bin/g++-7
-	    sudo update-alternatives --config gcc
+            sudo apt update
+            sudo apt install make -y
+            sudo apt install g++-7 -y
+            sudo update-alternatives \
+                    --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+                    --slave /usr/bin/g++ g++ /usr/bin/g++-7
+            sudo update-alternatives --config gcc
         elif [ "${OS}" == \""CentOS Linux"\" ];then
             sudo yum install centos-release-scl
             sudo yum install scl-utils
@@ -94,26 +120,50 @@ install_tools() {
 
 install_dependencies() {
     cd ${EX_PATH}
-    if [ ${TARGET} == "server" ] ; then
-        ./install_glog.sh
-        ./install_safestringlib.sh
-        ./install_openHEVC.sh
-        ./install_SVT.sh
-        ./install_thrift.sh
-        ./install_FFmpeg.sh server
-    elif [ ${TARGET} == "client" ] ; then
+    if [ ${TARGET} = "server" ] ; then
+        exec_prompt "1.install glog"
+        if [ "$skip" = "n" ]; then
+            ./install_glog.sh
+        fi
+        exec_prompt "2.install safestreinglib"
+        if [ "$skip" = "n" ]; then
+            ./install_safestringlib.sh
+        fi
+        exec_prompt "3.install openHEVC"
+        if [ "$skip" = "n" ]; then
+            ./install_openHEVC.sh
+        fi
+        exec_prompt "4.install SVT"
+        if [ "$skip" = "n" ]; then
+            ./install_SVT.sh
+        fi
+        exec_prompt "5.install thrift"
+        if [ "$skip" = "n" ]; then
+            ./install_thrift.sh
+        fi
+        exec_prompt "6.install FFmpeg"
+        if [ "$skip" = "n" ]; then
+            ./install_FFmpeg.sh server
+        fi
+
+        #./install_safestringlib.sh
+        #./install_openHEVC.sh
+        #./install_SVT.sh
+        #./install_thrift.sh
+        #./install_FFmpeg.sh server
+    elif [ ${TARGET} = "client" ] ; then
         ./install_glog.sh
         ./install_safestringlib.sh
         ./prebuild_player.sh
         ./install_FFmpeg.sh client
-    elif [ ${TARGET} == "android" ] ; then
+    elif [ ${TARGET} = "android" ] ; then
         ./prebuild_android.sh
     fi
 
-    if [ ${LTTNGFLAG} == "--enable-lttng" ] ; then
+    if [ ${LTTNGFLAG} = "--enable-lttng" ] ; then
         ./install_lttng.sh
     fi
-} 
+}
 
 install_tools
 install_dependencies ${TARGET}

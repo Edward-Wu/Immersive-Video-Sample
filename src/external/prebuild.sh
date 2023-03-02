@@ -60,7 +60,7 @@ install_tools() {
         if [ "${OS}" == \""Ubuntu"\" ];then
             sudo apt-get install -y software-properties-common
             sudo apt update
-            sudo apt install make -y
+            sudo apt install make python python3 -y
             sudo apt install g++-7 -y
             sudo update-alternatives \
                     --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \

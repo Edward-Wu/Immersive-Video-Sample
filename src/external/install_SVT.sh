@@ -10,6 +10,8 @@ if [ ! -d "./SVT-HEVC" ] ; then
 fi
 
 cd SVT-HEVC
+git config --global user.name "Edward.Wu"
+git config --global user.email "aimin_email@126.com"
 git checkout ec0d95c7e0d5be20586e1b87150bdfb9ae97cf4d
 patch -p1 < ../../../external/0001-strict-memory-for-svt.patch
 if [ "$AVX512FLAG" == "avx512" ] ; then

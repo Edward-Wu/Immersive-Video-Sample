@@ -4,13 +4,13 @@ OS=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
 mkdir -p ../build/external
 cd ../build/external
 
-if [ "${OS}" == \""CentOS Linux"\" ];then
+if [ "${OS}" = \""CentOS Linux"\" ];then
     sudo yum install libevent-devel.x86_64 -y
     sudo yum install openssl-devel -y
 fi
 
 # boost
-if [ ! "${BOOST_VERSION}" == \""1_63"\" ];then
+if [ ! "${BOOST_VERSION}" = \""1_63"\" ];then
     if [ ! -f "./boost_1_63_0.tar.gz" ] ; then
         wget -q https://sourceforge.net/projects/boost/files/boost/1.63.0/boost_1_63_0.tar.gz
     fi
@@ -23,7 +23,7 @@ if [ ! "${BOOST_VERSION}" == \""1_63"\" ];then
 fi
 
 # Thrift
-if [ ! "${THRIFT_VERSION}" == "0.12.0" ];then
+if [ ! "${THRIFT_VERSION}" = "0.12.0" ];then
     if [ ! -f "./thrift-0.12.0.tar.gz" ] ; then
         wget -q http://apache.osuosl.org/thrift/0.12.0/thrift-0.12.0.tar.gz
     fi

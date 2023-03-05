@@ -165,5 +165,8 @@ install_dependencies() {
     fi
 }
 
-install_tools
+exec_prompt "0.install tools"
+if [ "$skip" = "n" ]; then
+    install_tools
+fi
 install_dependencies ${TARGET}

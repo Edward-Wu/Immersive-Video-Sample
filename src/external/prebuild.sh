@@ -60,7 +60,10 @@ install_tools() {
         if [ "${OS}" == \""Ubuntu"\" ];then
             sudo apt-get install -y software-properties-common
             sudo apt update
-            sudo apt install make python-dev python3-dev libgoogle-glog-dev sudo libssl-dev -y
+            sudo apt install make -y
+            sudo apt install python-dev python3-dev -y
+            sudo apt install libgoogle-glog-dev -y
+            sudo apt install sudo libssl-dev -y
             sudo apt install g++-7 -y
             sudo update-alternatives \
                     --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
